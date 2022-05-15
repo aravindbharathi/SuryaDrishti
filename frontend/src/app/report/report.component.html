@@ -1,0 +1,89 @@
+<mat-card *ngIf="(totalData!==null)&&burstsDecoded" style="width: 96%; margin:auto; margin-top: 1%;">
+  <div class="totalCard">
+    <h2>File Name: {{totalData.file_name}}</h2>
+    <br />
+    <h2>Start Time of the File: {{getDate(totalData.start+1483228800)+ ' ('+totalData.start.toString() +'s)'}}</h2>
+    <h2 style="width:100%">
+      Bin Size: ({{binSzValue}})
+      <mat-slider [(ngModel)]="binSzValue" [max]="binSzMax" [min]="binSzMin" [step]="50" thumbLabel>
+      </mat-slider>
+      <button mat-raised-button style="float: inline-end;" color="primary" (click)="resubmit()">Re-Submit</button>
+    </h2>
+    <div style="display: flex;flex-direction: row;align-items: center;">
+      <h2 *ngIf="!printing">Flare Selection: 
+      <mat-select *ngIf="!printing" (valueChange)="updateTotalData($event)"
+      [(value)]="totalChartMode"
+      style="margin-left: 10px;width:300px;background-color: white;padding: 3px;border-radius: 5px;box-shadow: 5px 5px 10px grey">
+        <mat-option style="font-size: medium;" *ngFor="let bsm of burstSelectionModes" [value]="bsm.value">
+          {{bsm.viewValue}}
+        </mat-option>
+      </mat-select>
+    </h2>
+
+    </div>
+    <h2>Flare Count: {{totalData.chartSeries[0].data.length}}</h2>
+
+    <!-- <app-linechart *ngIf="totalChartReady"[series]="totalData.chartSeries" [innerWidth]="innerWidth">
+        </app-linechart> -->
+    <app-linescatter *ngIf="totalChartReady" [series]="totalData.chartSeries" [innerWidth]="innerWidth">
+    </app-linescatter>
+    <div class="reloadWithParams">
+      <mat-spinner *ngIf="!totalChartReady"></mat-spinner>
+    </div>
+  </div>
+</mat-card>
+
+<br />
+<br />
+<br />
+
+<div *ngIf="burstsDecoded" style="display: flex; flex-direction: column;align-items: center;">
+  <h1>
+    {{rejectedBursts.length>0?'Selected Bursts':'Bursts Detected'}}
+  </h1>
+  <div *ngIf="!printing" style="display: flex;flex-direction: row;">
+    <mat-form-field>
+      <mat-label>
+        Sort By:
+      </mat-label>
+      <mat-select (valueChange)="sortBursts($event)" [value]="sortables[1].value">
+        <mat-option *ngFor="let sortable of sortables" [value]="sortable.value">
+          {{sortable.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="editbtns">
+      <button mat-raised-button color="primary" (click)="invertEditable()">
+        {{burstListEditable?'Save Changes':'Edit List'}}
+      </button>
+      <button *ngIf="rejectedBursts.length>0" mat-raised-button color="accent" (click)="rejectedBursts = []">
+        Reset Selection
+      </button>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="!burstsDecoded" class="reloadWithParams">
+  <mat-spinner></mat-spinner>
+</div>
+
+<app-burst-table *ngIf="burstsDecoded" [(rejectedBursts)]="rejectedBursts" [burstListEditable]="burstListEditable"
+  [bursts]="bursts" [areDeleted]="false" #burstTable></app-burst-table>
+<div *ngIf="rejectedBursts.length>0" style="display: flex; flex-direction: column;align-items: center;">
+  <h1>
+    Rejected Bursts
+  </h1>
+</div>
+<app-burst-table *ngIf="rejectedBursts.length>0" [(rejectedBursts)]="rejectedBursts"
+  [burstListEditable]="burstListEditable" [bursts]="bursts" [areDeleted]="true" #burstTable></app-burst-table>
+<!-- <app-linescatter *ngIf="bursts[0]!==null" [statData]="bursts[0].ns!"></app-linescatter> -->
+<div *ngIf="burstsDecoded">
+  <div style="display:flex;justify-content: space-around;width: 400px;margin: auto;margin-bottom: 0px;padding: 30px;">
+    <button *ngIf="(!burstListEditable)" mat-raised-button color="primary" (click)="saveData()">
+      Download Report
+    </button>
+    <button *ngIf="(!burstListEditable)" mat-raised-button color="accent" (click)="trainModel()">
+      Train the ML model
+    </button>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 450px;
+    margin-top: 30px;
+    padding: 20px;
+    padding-bottom: 0px;
+    background-color: navajowhite;
+    border-radius: 20px;
+}
+.main>*{
+    margin: 20px;
+}
+.bar{
+    width: 250px;
+    margin: auto;
+}
+.section1{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+button{
+    margin:10px;
+}
+#dragbox{
+    height: 200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    border: 2px grey dashed;
+    border-radius: 20px;
+}
+.dragarea {
+    background-color: antiquewhite;
+}
+
+.droparea {
+  background-color: #eff;
+}
+mat-chip-list{
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}

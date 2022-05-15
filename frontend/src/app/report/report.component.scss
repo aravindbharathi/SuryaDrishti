@@ -1,0 +1,126 @@
+mat-grid-list {
+  margin-left: 70px;
+  margin-right: 70px;
+  border: 1px solid black;
+}
+
+.chartWrapper {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+
+apx-chart.disabled {
+  opacity: 0.4;
+}
+
+.editButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.editButtonsTable {
+  display: flex;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+  justify-items: center;
+  align-items: center;
+  align-content: space-between;
+
+}
+
+.editButtons>* {
+  margin-top: 20px;
+}
+
+.hide {
+  opacity: 0.4;
+}
+
+.mat-header-cell {
+  background-color: #ffd640;
+  color: black;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.mat-button-toggle {
+  background-color: #d6c893;
+}
+
+.mat-button-toggle-checked {
+  background-color: #ffd640;
+
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+.mat-cell {
+  border-right: #e0e0e0 1px solid;
+  text-align: center;
+  /* display: flex; */
+  /* align-items: center; */
+  /* align-content: center; */
+  /* justify-content: center; */
+  /* justify-items: center; */
+}
+
+.mat-panel-title {
+  height: 400px;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+}
+
+.fit_params {
+  flex: 4;
+}
+
+.reloadWithParams {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-items: center;
+}
+
+.mat-card {
+  margin: 10px;
+  background-color: #ffffff;
+  box-shadow: 5px 5px 10px grey
+}
+
+.totalCard {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.totalCard>p {
+  margin: 10px;
+}
+
+.totalCard>app-linescatter {
+  width: 100%;
+}
+
+.mat-slider {
+  width: 300px;
+}
+
+.editbtns>button {
+  margin-left: 20px;
+}

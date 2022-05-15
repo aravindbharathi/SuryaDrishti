@@ -1,0 +1,35 @@
+<apx-chart
+        [series]="data.chartOptions.series!"
+        [chart]="data.chartOptions.chart!"
+        [xaxis]="data.chartOptions.xaxis!"
+        [dataLabels]="data.chartOptions.dataLabels!"
+        [grid]="data.chartOptions.grid!"
+        [stroke]="data.chartOptions.stroke!"
+        [title]="data.chartOptions.title!"
+    >
+</apx-chart>
+<div class="options">
+    <div class="fit_params">
+    Bin Size: {{binSzValue}} <mat-slider [min]="binSzMin" [max]="binSzMax" [value]="binSzValue"></mat-slider><br>
+    Other Var: {{binSzValue}} <mat-slider [min]="varSzMin" [max]="varSzMax" [value]="varSzValue"></mat-slider>
+    </div>
+    <div class="reloadWithParams">
+        <button mat-raised-button color="primary" (click)="updateData()">Reload</button>
+    </div>
+</div>
+<table mat-table [dataSource]="[data.metaData]" style="width: 100%;" class="mat-elevation-z8">
+    <ng-container matColumnDef="max">
+        <th mat-header-cell *matHeaderCellDef>Max</th>
+        <td mat-cell *matCellDef="let element">{{element.max}}</td>
+    </ng-container>
+    <ng-container matColumnDef="maxAt">
+        <th mat-header-cell *matHeaderCellDef>Max at</th>
+        <td mat-cell *matCellDef="let element">{{element.maxAt}}</td>
+    </ng-container>
+    <ng-container matColumnDef="avg">
+        <th mat-header-cell *matHeaderCellDef>Average</th>
+        <td mat-cell *matCellDef="let element">{{element.avg}}</td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="data.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: data.displayedColumns;"></tr>
+</table>

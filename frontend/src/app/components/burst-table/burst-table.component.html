@@ -1,0 +1,88 @@
+<table id="mainTable" style="width: 95%;margin:2.5%" mat-table
+  [dataSource]="areDeleted?filterRejected(bursts):filterAccepted(bursts)" class="mat-elevation-z8">
+  <ng-container matColumnDef="peak_time">
+    <th mat-header-cell *matHeaderCellDef>Peak Time</th>
+    <td [style]="(areDeleted?'opacity: 0.4;':'')+'width:10%;'" mat-cell *matCellDef="let element">
+      <div>
+        <p style="text-align:center">
+          (t = {{element.peak_time}}s) <br /> <br /> {{(formatSeconds(element.peak_time))}} <br /> from start
+        </p>
+        <button *ngIf="burstListEditable&&(!areDeleted)" mat-raised-button style="color: white;background-color: red;"
+          (click)="remove(bursts.indexOf(element))">
+          Remove
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="burstListEditable&&(areDeleted)" mat-raised-button style="color: white;background-color: green;"
+          (click)="add(bursts.indexOf(element))">
+          Add
+          <mat-icon>check</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="chartNS" #charts>
+    <th mat-header-cell *matHeaderCellDef>N-Sigma Algorithm</th>
+    <td [style]="(areDeleted?'opacity: 0.4;':'')+'width:35%'" mat-cell *matCellDef="let element" #chartcell>
+      <div>
+        <img *ngIf="element.ns.is_detected" src="./../../../assets/ns_{{element.peak_time}}.jpg" />
+        <h1 *ngIf="!element.ns.is_detected">Not detected by N-Sigma</h1>
+        <h2 style="text-align: center;" *ngIf="element.ns.is_detected&&element.ns.fit_params.is_fit">EFP Fit Properties
+        </h2>
+        <div *ngIf="element.ns.is_detected&&element.ns.fit_params.is_fit"
+          style="border: 3px solid black;width: 70%;padding-left: 5%;">
+          <p>(A, B, C, D) =
+            ({{element.ns.fit_params.A}}, {{element.ns.fit_params.B}}, {{element.ns.fit_params.C}}, {{element.ns.fit_params.D}})
+          </p>
+          <p>&chi;<sup>2</sup> Value: {{element.ns.fit_params.ChiSq}}</p>
+          <p>Decay constant: {{element.ns.fit_params.D}} s<sup>-1</sup></p>
+          <p>Duration: {{element.ns.fit_params.Duration}} s</p>
+          <p *ngIf="element.ns.fit_params.Rise">Rise Time: {{element.ns.fit_params.Rise}} s</p>
+          <p *ngIf="element.ns.fit_params.Decay">Decay Time: {{element.ns.fit_params.Decay}} s</p>
+        </div>
+        <h2 *ngIf="element.ns.is_detected&&!element.ns.fit_params.is_fit">EFP fit could not be determined
+        </h2>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="chartLM" #charts>
+    <th mat-header-cell *matHeaderCellDef>Local Maxima Algorithm</th>
+    <td [style]="(areDeleted?'opacity: 0.4;':'')+'width:35%'" mat-cell *matCellDef="let element" #chartcell>
+      <div>
+        <img *ngIf="element.lm.is_detected" src="./../../../assets/lm_{{element.peak_time}}.jpg" />
+        <h1 *ngIf="!element.lm.is_detected">Not detected by Local Maxima</h1>
+        <h2 style="text-align: center;" *ngIf="element.lm.is_detected&&element.lm.fit_params.is_fit">EFP Fit Properties
+        </h2>
+        <div *ngIf="element.lm.is_detected&&element.lm.fit_params.is_fit"
+          style="border: 3px solid black;width: 70%;padding-left: 5%;">
+          <p>(A, B, C, D) =
+            ({{element.lm.fit_params.A}}, {{element.lm.fit_params.B}}, {{element.lm.fit_params.C}}, {{element.lm.fit_params.D}})
+          </p>
+          <p>&chi;<sup>2</sup> Value: {{element.lm.fit_params.ChiSq}}</p>
+          <p>Decay constant: {{element.lm.fit_params.D}} s<sup>-1</sup></p>
+          <p>Duration: {{element.lm.fit_params.Duration}} s</p>
+          <p *ngIf="element.lm.fit_params.Rise">Rise Time: {{element.lm.fit_params.Rise}} s</p>
+          <p *ngIf="element.lm.fit_params.Decay">Decay Time: {{element.lm.fit_params.Decay}} s</p>
+        </div>
+        <h2 *ngIf="element.lm.is_detected&&!element.lm.fit_params.is_fit">EFP fit could not be determined
+        </h2>
+      </div>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="meta">
+    <th mat-header-cell *matHeaderCellDef>Flare Characteristics</th>
+    <td [style]="(areDeleted?'opacity: 0.4;':'')+'width:20%;'" mat-cell *matCellDef="let element">
+      <div>
+        <p>Peak Count Rate: {{element.peak_rate}} counts/s </p>
+        <p>Background Count Rate: {{element.bg_rate}} counts/s </p>
+        <p>Soft X-Ray Classification: {{element.class}} </p>
+        <p>Peak Temperature: {{(element.peak_temp).toPrecision(3)}} MK </p>
+        <p>Peak Flux: {{element.peak_flux.toPrecision(3)}} W/m<sup>2</sup> </p>
+        <p>Peak EM: {{element.peak_em.toPrecision(3)}} cm<sup>3</sup> </p>
+        <p>Total Radiative Loss: {{element.total_lrad.toPrecision(3)}} ergs </p>
+        <p>ML Confidence: {{element.ml_conf}} %</p>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsMain"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsMain;"></tr>
+</table>

@@ -1,0 +1,8 @@
+fastapi==0.75.0
+python-multipart==0.0.5
+uvicorn==0.17.6
+numpy==1.22.3
+scipy==1.5.3
+astropy==5.0.2
+matplotlib==3.5.1
+tensorflow==2.8.0

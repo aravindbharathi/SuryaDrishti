@@ -1,0 +1,21 @@
+<div class="main">
+  <div id="dragbox" *ngIf="fileNames.length==0" draggable="false" ngClass="{{dragAreaClass}}">
+    <p *ngIf="dragAreaClass=='dragarea'" style="font-size: 30px;color: grey;">Drag your file 📂 here</p>
+    <p *ngIf="dragAreaClass=='droparea'" style="font-size: 30px;color: grey;">Drop your file 📂 here</p>
+  </div>
+  <mat-form-field *ngIf="fileNames.length>0">
+    <mat-label>Selected File</mat-label>
+    <mat-chip-list>
+      <mat-chip color="accent" selected *ngFor="let name of fileNames">{{name}}</mat-chip>
+    </mat-chip-list>
+  </mat-form-field>
+  <section class="section1">
+    <button *ngIf="fileNames.length==0" mat-raised-button color="accent" (click)="propagateClick()">Upload File</button>
+    <button *ngIf="fileNames.length>0" mat-raised-button color="primary" (click)="submit()">Submit File</button>
+    <button *ngIf="fileNames.length>0" mat-raised-button color="primary" (click)="clear()">Clear File</button>
+  </section>
+  <input style="display: none;" type="file" (change)="updateFile($event)" #files>
+  <section *ngIf="submitted" class="section1">
+    <mat-progress-bar class="bar" mode="determinate" [value]="progress"></mat-progress-bar>
+  </section>
+</div>

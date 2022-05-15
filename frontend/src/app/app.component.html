@@ -1,0 +1,5 @@
+<mat-toolbar color="primary" style="display: flex;align-content: space-between;justify-content: space-between;">
+    <span>SuryaDrishti</span>
+    <button *ngIf="url.includes('report')" style="float: inline-end;color: white;background-color: red;" mat-raised-button (click)="toUpload(true)">Exit Session</button>
+</mat-toolbar>
+<router-outlet></router-outlet>
